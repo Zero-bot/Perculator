@@ -9,22 +9,14 @@ import main.java.com.affirm.AffirmationBuilder;
 
 public class Perculator{
 	private HttpServletRequest httpServletRequest;
-	 
+	private AffirmationBuilder affirmationBuilder; 
 	
 	public Perculator(HttpServletRequest httpServletRequest) {
 		this.httpServletRequest = httpServletRequest;
-	}
-	
-	public boolean isValid() {
-		return (httpServletRequest.getParameter("User").equals("Marimuthu"));
-	}
-	
-	public boolean isGetRequest() {
-		return httpServletRequest.getMethod().equals("GET");
+		this.affirmationBuilder = new AffirmationBuilder(httpServletRequest);
 	}
 	
 	public Action affirm() {
-		AffirmationBuilder affirmationBuilder = new AffirmationBuilder(httpServletRequest);
 		return affirmationBuilder.validate();
 	}
 
