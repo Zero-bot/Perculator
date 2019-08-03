@@ -13,11 +13,13 @@ import test.java.com.helpers.MockDataGenerator;
 class FilterTest {
 	HttpServletRequest request;
 	@Test
-	void testFiltersParam() {
+	void testCookieCountAllow() {
 		request = mock(HttpServletRequest.class);
-		
 		when(request.getCookies()).thenReturn(MockDataGenerator.generateCookies(2));
-		assertEquals(Action.Accept, new Perculator(request).affirm());
+		assertEquals(Action.Accept, new Perculator(request).affirm());	
+	}
+	
+	void testCookieCountBlock() {
 		
 	}
 
