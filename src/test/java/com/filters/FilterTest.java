@@ -55,6 +55,22 @@ class FilterTest {
 		when(httpServletrequest.getCookies()).thenReturn(MockDataGenerator.generateCookies(keyCookie, valueCookie));
 		assertEquals(Action.Accept, new Perculator(httpServletrequest, ruleSet).affirm());
 	}
+	
+	@Test
+	void testCookieTamper() throws Exception {
+		this.httpServletrequest = mock(HttpServletRequest.class);
+		String[] key = {"key", "duplicate"};
+		String[] value = {"test", "tests_2"};
+		String[] keyCookie = {"key", "session"};
+		String[] valueCookie = {"test", "123456789"};
+		List<Rule> ruleSet = new ArrayList<Rule>();
+		ruleSet.add(MockRuleGenerator.generateCookieCheckerRule());
+		when(httpServletrequest.getParameterMap()).thenReturn(MockDataGenerator.generateParametersMap(key, value));
+		when(httpServletrequest.getCookies()).thenReturn(MockDataGenerator.generateCookies(keyCookie, valueCookie));
+		assertEquals(Action.Reject, new Perculator(httpServletrequest, ruleSet).affirm());
+	}
+	
+	
 
 }
 

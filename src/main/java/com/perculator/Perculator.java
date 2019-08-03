@@ -13,13 +13,11 @@ import main.java.com.rule.Rule;
 
 public class Perculator{
 	private HttpServletRequest httpServletRequest;
-	private AffirmationBuilder affirmationBuilder; 
-	private List<Rule> rules;
+	private AffirmationBuilder affirmationBuilder;
 	
 	public Perculator(HttpServletRequest httpServletRequest, List<Rule> rules) {
 		this.httpServletRequest = httpServletRequest;
 		this.affirmationBuilder = new AffirmationBuilder(this.httpServletRequest, rules);
-		this.rules = rules;
 	}
 	
 	public Action affirm() throws UndefinedOperatorException {
