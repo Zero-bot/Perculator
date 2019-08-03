@@ -12,5 +12,6 @@ public enum Action {
 	Reject,
 	Redirect,
 	Invalidate,
-	Continue
+	Continue,
+	Log
 }

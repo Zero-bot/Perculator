@@ -1,5 +1,8 @@
 package test.java.com.helpers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 
 
@@ -11,12 +14,22 @@ public class MockDataGenerator {
 		return cookies;
 	}
 	
-	public static Cookie[] generateCookies(String[] names, String[] values) {
-		assert(names.length == values.length);
-		Cookie[] cookies = new Cookie[names.length];
-		for(int i=0; i<names.length; i++)
-			cookies[i] = new Cookie(names[i], values[i]);
+	public static Cookie[] generateCookies(String[] name, String[] value) throws Exception {
+		if(name.length != value.length) throw new Exception("Name and Value array should have same length");
+		Cookie[] cookies = new Cookie[name.length];
+		for(int i=0; i<name.length; i++)
+			cookies[i] = new Cookie(name[i], value[i]);
 		return cookies;
 	}
+	
+	public static Map<String, String> generateParametersMap(String[] name, String[] value) throws Exception{
+		if(name.length != value.length) throw new Exception("Name and Value array should have same length");
+		Map<String, String> parametersMap = new HashMap<String, String>();
+		for(int i=0; i<name.length; i++) {
+			parametersMap.put(name[i], value[i]);
+		}
+		return parametersMap;
+	}
+	
 	
 }
