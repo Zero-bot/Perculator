@@ -10,8 +10,9 @@ import main.java.com.http.Parameters;
 
 
 /**
- * @author kalki
- *<h3>Condition models specific condition to be applied on defined location and evaluates based operator.</h3>
+ * @author Marimuthu Mahalingam
+ * 
+ *<h3>Condition models specific condition to be applied on defined location and evaluates it based operator.</h3>
  *
  */
 public class Condition {
@@ -21,11 +22,11 @@ public class Condition {
 	private Object value;
 	
 	/**
-	 * 
-	 * @param location a location defined in {@link HTTP} as static variable where we want to apply this condition
-	 * @param operator a operator that will be evaluated against the location, operator value depends on static variables in {@link Parameters} and {@link Cookies}.
-	 * @param key a key to evaluate
-	 * @param value a value to evaluate
+	 * @param location defined in {@link HTTP} as static variable where we want to apply this condition.
+	 * @param operator to be evaluated against the location, operator value depends on static.
+	 * variables in {@link Parameters} and {@link Cookies}.
+	 * @param key to evaluate.
+	 * @param value to evaluate.
 	 */
 	public Condition(byte location, byte operator, Object key, Object value) {
 		this.location = location;
@@ -35,10 +36,10 @@ public class Condition {
 	}
 	
 	/**
-	 * 
-	 * @param location a location defined in {@link HTTP} as static variable where we want to apply this condition
-	 * @param operator a operator that will be evaluated against the location, operator value depends on static variables in {@link Parameters} and {@link Cookies}.
-	 * @param key a key to evaluate
+	 * @param location a location defined in {@link HTTP} as static variable where we want to apply this condition.
+	 * @param operator a operator that will be evaluated against the location, operator value depends on static.
+	 * variables in {@link Parameters} and {@link Cookies}.
+	 * @param key a key to evaluate.
 	 */
 	
 	public Condition(byte location, byte operator, Object key) {
@@ -51,8 +52,8 @@ public class Condition {
 	 * Evaluates the condition and returns the result.
 	 * 
 	 * @param httpServletRequest a {@link HttpServletRequest} to validate.
-	 * @return returns if condition evaluation result.
-	 * @throws UndefinedOperatorException
+	 * @return if condition evaluation result.
+	 * @throws UndefinedOperatorException.
 	 */
 	public Boolean evaluate(HttpServletRequest httpServletRequest) throws UndefinedOperatorException {
 		if(this.location == HTTP.PARAMETERS) {
