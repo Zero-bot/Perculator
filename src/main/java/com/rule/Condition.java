@@ -10,10 +10,9 @@ import main.java.com.http.Parameters;
 
 
 /**
- * @author Marimuthu Mahalingam
  * 
- *<h3>Condition models specific condition to be applied on defined location and evaluates it based operator.</h3>
- *
+ * Models specific condition to be applied on defined location and evaluates it based on operator.
+ * @author Marimuthu Mahalingam - (marimuthu125@gmail.com)
  */
 public class Condition {
 	private byte location;
@@ -57,34 +56,62 @@ public class Condition {
 	 */
 	public Boolean evaluate(HttpServletRequest httpServletRequest) throws UndefinedOperatorException {
 		if(this.location == HTTP.PARAMETERS) {
-			Parameters parameters = new Parameters(httpServletRequest.getParameterMap());
+			Parameters parameters = new Parameters(httpServletRequest);
 			
-			if(Parameters.equal == this.operator) {
-				if(value == null || key == null) {
-					throw new NullPointerException("Key or Value cannot be null for equal operator");
-				}
-				return parameters.equal((String)key, (String)value);
-			}
-			
-			else if(Parameters.hasKey == this.operator) {
+			if(this.operator == Parameters.hasKey) {
 				if( key == null ) {
 					throw new NullPointerException("Key cannot be null for hasKey operator");
 				}
 				return parameters.hasKey((String)key);
 			}
-			
-			else if(Parameters.hasOnlyAlphaNumericChars == this.operator) {
+
+			else if(this.operator == Parameters.hasSpecialChar) {
+				if(key == null) {
+					throw new NullPointerException("Key cannot be null for hasSpecialChar operator");
+				}
+				return parameters.hasSpecialChar((String) key);
+			}
+
+			else if(this.operator == Parameters.hasOnlyAlphaNumericChars) {
 				if( key == null ) {
 					throw new NullPointerException("Key cannot be null for hasOnlyAlphaNumericChars operator");
 				}
 				return parameters.hasOnlyAlphaNumericChars((String)key);
 			}
 			
-			else if(Parameters.hasSpecialChar == this.operator) {
-				if(key == null) {
-					throw new NullPointerException("Key cannot be null for hasSpecialChar operator");
+			else if(this.operator == Parameters.match) {
+				if(value == null || key == null) {
+					throw new NullPointerException("Key or Value cannot be null for match operator");
 				}
-				return parameters.hasSpecialChar((String) key);
+				return parameters.match((String)key, (String)value);
+			}
+			
+			else if(this.operator == Parameters.notMatch) {
+				if(value == null || key == null) {
+					throw new NullPointerException("Key or Value cannot be null for notMatch operator");
+				}
+				return parameters.notMatch((String)key, (String)value);
+			}
+			
+			else if(this.operator == Parameters.equal) {
+				if(value == null || key == null) {
+					throw new NullPointerException("Key or Value cannot be null for equal operator");
+				}
+				return parameters.equal((String)key, (String)value);
+			}
+			
+			else if(this.operator == Parameters.notEqual) {
+				if(value == null || key == null) {
+					throw new NullPointerException("Key or Value cannot be null for notEqual operator");
+				}
+				return parameters.notEqual((String)key, (String)value);
+			}
+			
+			else if(this.operator == Parameters.isInteger) {
+				if(key == null) {
+					throw new NullPointerException("Key cannot be null for isInteger operator");
+				}
+				return parameters.isInteger((String) key);
 			}
 			
 			else if(this.operator == Parameters.count) {
@@ -95,10 +122,13 @@ public class Condition {
 		}
 		
 		if(this.location == HTTP.COOKIES) {
-			Cookies cookies = new Cookies(httpServletRequest.getCookies());
+			Cookies cookies = new Cookies(httpServletRequest);
 			
-			if(this.operator == Cookies.count) {
-				return cookies.count((int) key);
+			if(this.operator == Cookies.hasCookie) {
+				if(key == null) {
+					throw new NullPointerException("Key cannot be null for equal operator");
+				}
+				return cookies.hasCookie(key);
 			}
 			
 			else if(this.operator == Cookies.equals) {
@@ -108,32 +138,11 @@ public class Condition {
 				return cookies.equals(key, value);
 			}
 			
-			else if(this.operator == Cookies.hasCookie) {
-				if(key == null) {
-					throw new NullPointerException("Key cannot be null for equal operator");
-				}
-				return cookies.hasCookie(key);
-			}
-			
-			else if(this.operator == Cookies.lengthEquals) {
+			else if(this.operator == Cookies.notEquals) {
 				if(key == null || value == null) {
-					throw new NullPointerException("Key or Value cannot be null for lengthEquals operator");
+					throw new NullPointerException("Key or Value cannot be null for notEquals operator");
 				}
-				return cookies.lengthEquals(key, (int) value);
-			}
-			
-			else if(this.operator == Cookies.lengthGreaterThanEquals) {
-				if(key == null || value == null) {
-					throw new NullPointerException("Key or Value cannot be null for lengthGreaterThanEquals operator");
-				}
-				return cookies.lengthGreaterThanEquals(key, (int) value);
-			}
-			
-			else if(this.operator == Cookies.lengthLesserThanEquals) {
-				if(key == null || value == null) {
-					throw new NullPointerException("Key or Value cannot be null for lengthLesserThanEquals operator");
-				}
-				return cookies.lengthLesserThanEquals(key, (int) value);
+				return cookies.notEquals(key, (String) value);
 			}
 			
 			else if(this.operator == Cookies.match) {
@@ -143,18 +152,36 @@ public class Condition {
 				return cookies.match(key, (String) value);
 			}
 			
-			else if(this.operator == Cookies.notEquals) {
-				if(key == null || value == null) {
-					throw new NullPointerException("Key or Value cannot be null for notEquals operator");
-				}
-				return cookies.notEquals(key, (String) value);
-			}
-			
 			else if(this.operator == Cookies.notMatch) {
 				if(key == null || value == null) {
 					throw new NullPointerException("Key or Value cannot be null for notMatch operator");
 				}
 				return cookies.notMatch(key, (String) value);
+			}
+			
+			else if(this.operator == Cookies.lengthLesserThanEquals) {
+				if(key == null || value == null) {
+					throw new NullPointerException("Key or Value cannot be null for lengthLesserThanEquals operator");
+				}
+				return cookies.lengthLesserThanEquals(key, (int) value);
+			}
+			
+			else if(this.operator == Cookies.lengthGreaterThanEquals) {
+				if(key == null || value == null) {
+					throw new NullPointerException("Key or Value cannot be null for lengthGreaterThanEquals operator");
+				}
+				return cookies.lengthGreaterThanEquals(key, (int) value);
+			}
+			
+			else if(this.operator == Cookies.lengthEquals) {
+				if(key == null || value == null) {
+					throw new NullPointerException("Key or Value cannot be null for lengthEquals operator");
+				}
+				return cookies.lengthEquals(key, (int) value);
+			}
+
+			else if(this.operator == Cookies.count) {
+				return cookies.count((int) key);
 			}
 			
 			else throw new UndefinedOperatorException();

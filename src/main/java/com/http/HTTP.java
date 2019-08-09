@@ -10,12 +10,13 @@ public class HTTP {
 	private HttpServletRequest httpServletRequest;
 	public Parameters parameters;
 	public Cookies Cookies;
+	public Headers headers;
 	
 	@SuppressWarnings("unchecked")
 	public HTTP(HttpServletRequest httpServletRequest){
 		this.httpServletRequest = httpServletRequest;
-		this.parameters = new Parameters(this.httpServletRequest.getParameterMap());
-		this.Cookies = new Cookies(this.httpServletRequest.getCookies());
+		this.parameters = new Parameters(this.httpServletRequest);
+		this.Cookies = new Cookies(this.httpServletRequest);
 	}
 }
 

@@ -7,14 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import main.java.com.rule.Condition;
 
 /**
- * @author kalki
- * 
  * Parameters models list of operations supported on {@link HttpServletRequest} <code>parameters<code>. 
  * Request parameters are extra information sent with the request. 
  * For HTTP servlets, parameters are contained in the query string or posted form data.
- *
+ * 
+ * @author Marimuthu Mahalingam
  */
 public class Parameters {
+
+	
 	
 	/**
 	 * Used for accessing {@link #hasKey(String)} operator from {@link Condition} object.
@@ -62,6 +63,11 @@ public class Parameters {
 	public static final byte count = 8;
 	
 	/**
+	 * {@link HttpServletRequest}
+	 */
+	private HttpServletRequest httpServletRequest;
+	
+	/**
 	 * <code>java.util.Map<String, String></code> of the parameters returned by {@link HttpServletRequest#getParameterMap()}.
 	 */
 	private Map<String, String> parameters;
@@ -69,10 +75,11 @@ public class Parameters {
 	/**
 	 * Simple constructor
 
-	 * @param parameters <code>java.util.Map<String, String></code> of the parameters returned from {@link HttpServletRequest#getParameterMap()}.
+	 * @param httpServletRequest {@link HttpServletRequest}.
 	 */
-	public Parameters(Map<String, String> parameters) {
-		this.parameters = parameters;
+	public Parameters(HttpServletRequest httpServletRequest) {
+		this.httpServletRequest = httpServletRequest;
+		this.parameters = this.httpServletRequest.getParameterMap();
 	}
 	
 	/**
