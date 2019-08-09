@@ -16,7 +16,7 @@ import main.java.com.rule.Rule;
 import test.java.com.helpers.MockDataGenerator;
 import test.java.com.helpers.MockRuleGenerator;
 
-class FilterTest {
+class RuleConditionTests {
 	HttpServletRequest httpServletrequest;
 	
 	@Test
