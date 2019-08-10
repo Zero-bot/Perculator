@@ -3,9 +3,11 @@ package main.java.com.rule;
 
 import javax.servlet.http.HttpServletRequest;
 
+import main.java.com.exception.UndefinedLocationException;
 import main.java.com.exception.UndefinedOperatorException;
 import main.java.com.http.Cookies;
 import main.java.com.http.HTTP;
+import main.java.com.http.Headers;
 import main.java.com.http.Parameters;
 
 
@@ -52,9 +54,10 @@ public class Condition {
 	 * 
 	 * @param httpServletRequest a {@link HttpServletRequest} to validate.
 	 * @return if condition evaluation result.
+	 * @throws UndefinedLocationException 
 	 * @throws UndefinedOperatorException.
 	 */
-	public Boolean evaluate(HttpServletRequest httpServletRequest) throws UndefinedOperatorException {
+	public Boolean evaluate(HttpServletRequest httpServletRequest) throws UndefinedOperatorException, UndefinedLocationException {
 		if(this.location == HTTP.PARAMETERS) {
 			Parameters parameters = new Parameters(httpServletRequest);
 			
@@ -121,7 +124,7 @@ public class Condition {
 			else throw new UndefinedOperatorException();
 		}
 		
-		if(this.location == HTTP.COOKIES) {
+		else if(this.location == HTTP.COOKIES) {
 			Cookies cookies = new Cookies(httpServletRequest);
 			
 			if(this.operator == Cookies.hasCookie) {
@@ -185,9 +188,44 @@ public class Condition {
 			}
 			
 			else throw new UndefinedOperatorException();
-			
 		}
-		return false;
+		
+		else if(this.location == HTTP.HEADERS) {
+			Headers headers = new Headers(httpServletRequest);
+			if(this.operator == Headers.count) {
+				if(key == null || value == null) {
+					throw new NullPointerException("Key or Value cannot be null for count operator");
+				}
+				return headers.count((String) key, (int)value);
+			}
+			
+			else if(this.operator == Headers.hasRepeatedHeaders) {
+				if(key == null) throw new NullPointerException("Key cannot be null for hasRepeatedHeaders operator");
+				return headers.hasRepeatedHeaders((String) key);
+			}
+			
+			else if(this.operator == Headers.equals) {
+				if(key == null || value == null) {
+					throw new NullPointerException("Key or Value cannot be null for equal operator");
+				}
+				return headers.equals((String)key, (String)value);
+			}
+			
+			else if(this.operator == Headers.notEquals) {
+				if(key == null || value == null) {
+					throw new NullPointerException("Key or Value cannot be null for notEquals operator");
+				}
+				return headers.notEquals((String)key, (String)value);
+			}
+			
+			else if(this.operator == Headers.total) {
+				return headers.total((int) key);
+			}
+			
+			else throw new UndefinedOperatorException();
+		}
+		
+		throw new UndefinedLocationException();
 	}
 
 }

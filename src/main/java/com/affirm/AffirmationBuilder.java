@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import main.java.com.action.Action;
+import main.java.com.exception.UndefinedLocationException;
 import main.java.com.exception.UndefinedOperatorException;
 import main.java.com.http.HTTP;
 import main.java.com.http.Parameters;
@@ -22,7 +23,7 @@ public class AffirmationBuilder {
 		this.ruleSet = ruleSet;
 	}
 	
-	public Action validate() throws UndefinedOperatorException {
+	public Action validate() throws UndefinedOperatorException, UndefinedLocationException {
 		Action result = null;
 		for(Rule rule: ruleSet) {
 			result = rule.execute(this.httpServletRequest);

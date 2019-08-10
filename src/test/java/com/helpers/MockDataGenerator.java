@@ -1,6 +1,9 @@
 package test.java.com.helpers;
 
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -29,6 +32,14 @@ public class MockDataGenerator {
 			parametersMap.put(name[i], value[i]);
 		}
 		return parametersMap;
+	}
+	
+	public static Enumeration<String> generateHeaderNames(Map<String, List<String>> headersMap){
+		return Collections.enumeration(headersMap.keySet());
+	}
+	
+	public static Enumeration<String> generateHeadersValue(Map<String, List<String>> headersMap, String key){
+		return Collections.enumeration(headersMap.get(key));
 	}
 	
 	

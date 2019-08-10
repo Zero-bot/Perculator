@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import main.java.com.action.Action;
 import main.java.com.affirm.AffirmationBuilder;
+import main.java.com.exception.UndefinedLocationException;
 import main.java.com.exception.UndefinedOperatorException;
 import main.java.com.rule.Rule;
 
@@ -20,7 +21,7 @@ public class Perculator{
 		this.affirmationBuilder = new AffirmationBuilder(this.httpServletRequest, rules);
 	}
 	
-	public Action affirm() throws UndefinedOperatorException {
+	public Action affirm() throws UndefinedOperatorException, UndefinedLocationException {
 		return affirmationBuilder.validate();
 	}
 

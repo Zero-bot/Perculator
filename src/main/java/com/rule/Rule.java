@@ -3,6 +3,7 @@ package main.java.com.rule;
 import javax.servlet.http.HttpServletRequest;
 
 import main.java.com.action.Action;
+import main.java.com.exception.UndefinedLocationException;
 import main.java.com.exception.UndefinedOperatorException;
 
 public class Rule {
@@ -22,7 +23,7 @@ public class Rule {
 		this.actionFailure = actionFailure;
 	}
 	
-	public Action execute(HttpServletRequest httpServletRequest) throws UndefinedOperatorException {
+	public Action execute(HttpServletRequest httpServletRequest) throws UndefinedOperatorException, UndefinedLocationException {
 		for(Condition condition: conditions) {
 			if(!condition.evaluate(httpServletRequest)) 
 				return this.actionFailure;
